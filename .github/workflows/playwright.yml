@@ -73,9 +73,9 @@ jobs:
       - name: Install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-          allure-endpoint: https://testing.testops.cloud
-          allure-token: ${{ secrets.TESTING_ALLURE_TOKEN }}
-          allure-project-id: 276
+          allure-endpoint: https://demo.testops.cloud
+          allure-token: ${{ secrets.DEMO_ALLURE_TOKEN }}
+          allure-project-id: 5030
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
