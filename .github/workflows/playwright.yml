@@ -1,0 +1,96 @@
+name: Playwright Tests (Matrix Shards)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+      ALLURE_USERNAME:
+        description: "ALLURE_USERNAME service parameter. Leave blank."
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
+permissions:
+  contents: read
+
+env:
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  TOTAL_SHARDS: 2
+  NODE_VERSION: '20'
+  PNPM_VERSION: '9'
+  PLAYWRIGHT_IMAGE: 'mcr.microsoft.com/playwright:v1.48.2-noble'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      shards: ${{ steps.shards.outputs.shards }}
+      count: ${{ steps.shards.outputs.count }}
+    steps:
+      - id: shards
+        run: |
+          COUNT=${{ env.TOTAL_SHARDS }}
+          python3 -c "import json; print('shards=' + json.dumps(list(range(1, $COUNT + 1))))" >> $GITHUB_OUTPUT
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+
+  test:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.setup.outputs.shards) }}
+    container:
+      image: ${{ env.PLAYWRIGHT_IMAGE }}
+    env:
+      HOME: /root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright system dependencies (no browsers)
+        run: pnpm exec playwright install-deps
+
+      - name: Install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT }}
+          allure-token: ${{ secrets.ALLURE_TOKEN }}
+          allure-project-id: 1
+
+      - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
+        run: |
+          allurectl watch -- pnpm exec playwright test \
+            --shard=${{ matrix.shard }}/${{ needs.setup.outputs.count }} \
+            --reporter=line,allure-playwright
+        env:
+          ALLURE_RESULTS: ${{ env.ALLURE_RESULTS }}
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+          ALLURE_LAUNCH_TAGS: "shard:${{ matrix.shard }},branch:${{ github.ref_name }},event:${{ github.event_name }}"
+          CI: true
+
+
