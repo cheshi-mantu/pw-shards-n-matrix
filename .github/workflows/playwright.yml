@@ -1,10 +1,6 @@
 name: Playwright Tests (Matrix Shards)
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
     inputs:
       ALLURE_JOB_RUN_ID:
@@ -78,9 +74,9 @@ jobs:
       - name: Install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT }}
-          allure-token: ${{ secrets.ALLURE_TOKEN }}
-          allure-project-id: 1
+          allure-endpoint: https://testing.testops.cloud
+          allure-token: ${{ secrets.TESTING_ALLURE_TOKEN }}
+          allure-project-id: 276
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
