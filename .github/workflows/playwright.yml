@@ -71,7 +71,7 @@ jobs:
         run: pnpm exec playwright install-deps
 
       - name: Install and configure allurectl
-        uses: allure-framework/setup-allurectl@v1
+        uses: allure-framework/setup-allurectl@v1.0.3
         with:
           allure-endpoint: https://demo.testops.cloud
           allure-token: ${{ secrets.DEMO_ALLURE_TOKEN }}
