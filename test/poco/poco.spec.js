@@ -26,7 +26,7 @@ test("Assert a tuple poco 001 001", async () => {
 });
 
 test("Assert a tuple poco 002 001", async () => {
-  await setup({ layer: "e2e", owner: "bugsbunny" });
+  await setup({ layer: "api", owner: "bugsbunny" });
   await allure.feature("load testing test results processing");
   await allure.story("un poco de e2e tests to this project");
   await allure.label("tracker", "AD-2");
@@ -62,7 +62,7 @@ test("Assert a tuple poco 005 001", async () => {
 });
 
 test("Assert a tuple poco 006 001", async () => {
-  await setup({ layer: "e2e", owner: "bugsbunny" });
+  await setup({ layer: "web", owner: "bugsbunny" });
   await allure.feature("load testing test results processing");
   await allure.story("un poco de e2e tests to this project");
   await allure.label("tracker", "AD-6");
