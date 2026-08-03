@@ -19,8 +19,8 @@ on:
         required: true
         type: choice
         options:
-          - random
           - always
+          - random
           - broken
           - never
         default: always

@@ -3,7 +3,7 @@ const allure = require("allure-js-commons");
 const { setup, assertStep } = require("../allureHelpers");
 
 test("Assert a tuple unit 001 001", async () => {
-  await setup({ layer: "unit" });
+  await setup({ layer: "unit", owner: "bugsbunny" });
   await allure.feature("test results processing");
   await allure.story("unit tests");
   await assertStep("Assert 123 versus 123", "ODD");

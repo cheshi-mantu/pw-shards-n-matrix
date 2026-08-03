@@ -1,11 +1,12 @@
 name: Playwright Tests (Browser Matrix)
 
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       TESTS_TYPE:
         description: "Select type of tests"
-        required: true
+        required: false
         type: choice
         options:
           - test/poco/
@@ -16,11 +17,11 @@ on:
         default: test/poco/
       TESTS_SUCCESS:
         description: "Decide if tests would fail or not"
-        required: true
+        required: false
         type: choice
         options:
-          - random
           - always
+          - random
           - broken
           - never
         default: always
@@ -80,6 +81,10 @@ jobs:
           allure-endpoint: https://demo.testops.cloud
           allure-token: ${{ secrets.DEMO_ALLURE_TOKEN }}
           allure-project-id: 5030
+
+      - name: Pause before non-chromium run
+        if: matrix.browser != 'chromium'
+        run: sleep 2
 
       - name: Run Playwright tests (${{ matrix.browser }})
         run: |
