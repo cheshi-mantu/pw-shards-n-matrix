@@ -6,7 +6,7 @@ on:
     inputs:
       TESTS_TYPE:
         description: "Select type of tests"
-        required: true
+        required: false
         type: choice
         options:
           - test/poco/
@@ -17,7 +17,7 @@ on:
         default: test/poco/
       TESTS_SUCCESS:
         description: "Decide if tests would fail or not"
-        required: true
+        required: false
         type: choice
         options:
           - random
