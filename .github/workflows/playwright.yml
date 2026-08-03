@@ -13,7 +13,7 @@ on:
           - test/unit-many/
           - test/unit/
           - test/
-        default: test/poco/
+        default: test/unit/
       TESTS_SUCCESS:
         description: "Decide if tests would fail or not"
         required: true
@@ -97,7 +97,7 @@ jobs:
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
-          allurectl watch -- pnpm exec playwright test test/unit/ \
+          allurectl watch -- pnpm exec playwright test ${{ github.event.inputs.TESTS_TYPE || 'test/unit/' }} \
             --shard=${{ matrix.shard }}/${{ needs.setup.outputs.count }} \
             --reporter=allure-playwright
         env:
