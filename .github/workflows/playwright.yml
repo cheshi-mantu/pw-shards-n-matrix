@@ -1,6 +1,7 @@
 name: Playwright Tests (Matrix Shards)
 
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       TESTS_TYPE:
