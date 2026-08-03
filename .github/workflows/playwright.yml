@@ -105,5 +105,6 @@ jobs:
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
           ALLURE_LAUNCH_TAGS: "branch:${{ github.ref_name }},event:${{ github.event_name }}"
           RUNNER_SHARD_ID: ${{ matrix.shard }}
+          TESTS_SUCCESS: ${{ github.event.inputs.TESTS_SUCCESS }}
 
 
