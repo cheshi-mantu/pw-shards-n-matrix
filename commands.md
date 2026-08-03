@@ -42,6 +42,7 @@ TESTS_SUCCESS=random  npx playwright test test/poco/ test/unit/ test/unit-many/ 
 
 ```shell
 TESTS_SUCCESS=always npx playwright test test/poco/ --grep "Assert a tuple poco 001"
+TESTS_SUCCESS=always npx playwright test test/unit/ --reporter=allure-playwright
 TESTS_SUCCESS=always npx playwright test test/attachments/ --grep "small CSV attachment _001"
 ```
 
