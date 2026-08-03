@@ -42,7 +42,7 @@ env:
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   TOTAL_SHARDS: 2
-  NODE_VERSION: '20'
+  NODE_VERSION: '24'
 
 jobs:
   setup:
