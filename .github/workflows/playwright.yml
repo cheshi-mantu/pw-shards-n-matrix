@@ -3,6 +3,27 @@ name: Playwright Tests (Matrix Shards)
 on:
   workflow_dispatch:
     inputs:
+      TESTS_TYPE:
+        description: "Select type of tests"
+        required: true
+        type: choice
+        options:
+          - test/poco/
+          - test/attachments/
+          - test/unit-many/
+          - test/unit/
+          - test/
+        default: test/poco/
+      TESTS_SUCCESS:
+        description: "Decide if tests would fail or not"
+        required: true
+        type: choice
+        options:
+          - random
+          - always
+          - broken
+          - never
+        default: always
       ALLURE_JOB_RUN_ID:
         description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
         required: false
@@ -79,7 +100,7 @@ jobs:
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
-          allurectl watch -- pnpm exec playwright test \
+          allurectl watch -- pnpm exec playwright test/poco \
             --shard=${{ matrix.shard }}/${{ needs.setup.outputs.count }} \
             --reporter=allure-playwright
         env:
