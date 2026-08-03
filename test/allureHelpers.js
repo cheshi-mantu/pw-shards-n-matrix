@@ -39,6 +39,7 @@ async function assertStep(name, reason = "ODD") {
 async function setup({ layer, owner } = {}) {
   await applyGate(); 
   if (layer) await allure.layer(layer);
+  if (layer === "unit") await allure.epic("BE unit tests");
   if (layer === "api") await allure.epic("BE tests");
   if (layer === "e2e") await allure.epic("FE tests");
   if (layer === "web") await allure.epic("FE tests");
