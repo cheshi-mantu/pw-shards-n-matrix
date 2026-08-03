@@ -20,8 +20,8 @@ on:
         required: false
         type: choice
         options:
-          - random
           - always
+          - random
           - broken
           - never
         default: always
