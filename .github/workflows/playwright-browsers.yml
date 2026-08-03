@@ -1,0 +1,92 @@
+name: Playwright Tests (Browser Matrix)
+
+on:
+  workflow_dispatch:
+    inputs:
+      TESTS_TYPE:
+        description: "Select type of tests"
+        required: true
+        type: choice
+        options:
+          - test/poco/
+          - test/attachments/
+          - test/unit-many/
+          - test/unit/
+          - test/
+        default: test/poco/
+      TESTS_SUCCESS:
+        description: "Decide if tests would fail or not"
+        required: true
+        type: choice
+        options:
+          - random
+          - always
+          - broken
+          - never
+        default: always
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+      ALLURE_USERNAME:
+        description: "ALLURE_USERNAME service parameter. Leave blank."
+        required: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
+permissions:
+  contents: read
+
+env:
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  NODE_VERSION: '24'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    container:
+      image: mcr.microsoft.com/playwright:v1.48.2-noble
+    env:
+      HOME: /root
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright system dependencies (no browsers)
+        run: pnpm exec playwright install-deps
+
+      - name: Install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1.0.3
+        with:
+          allure-endpoint: https://demo.testops.cloud
+          allure-token: ${{ secrets.DEMO_ALLURE_TOKEN }}
+          allure-project-id: 5030
+
+      - name: Run Playwright tests (${{ matrix.browser }})
+        run: |
+          allurectl watch -- pnpm exec playwright test ${{ github.event.inputs.TESTS_TYPE || 'test/poco/' }} \
+            --reporter=allure-playwright
+        env:
+          ALLURE_RESULTS: ${{ env.ALLURE_RESULTS }}
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+          ALLURE_LAUNCH_TAGS: "branch:${{ github.ref_name }},event:${{ github.event_name }},browser:${{ matrix.browser }}"
+          RUNNER_SHARD_ID: ${{ matrix.browser }}
