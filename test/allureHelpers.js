@@ -37,7 +37,7 @@ async function assertStep(name, reason = "ODD") {
 }
 
 async function setup({ layer, owner } = {}) {
-  await applyGate(); // os label + broken-mode gate (mirrors root conftest)
+  await applyGate(); 
   if (layer) await allure.layer(layer);
   if (layer === "api") await allure.epic("BE tests");
   if (layer === "e2e") await allure.epic("FE tests");
