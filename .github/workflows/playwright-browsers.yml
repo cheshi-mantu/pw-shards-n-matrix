@@ -82,6 +82,10 @@ jobs:
           allure-token: ${{ secrets.DEMO_ALLURE_TOKEN }}
           allure-project-id: 5030
 
+      - name: Pause before non-chromium run
+        if: matrix.browser != 'chromium'
+        run: sleep 2
+
       - name: Run Playwright tests (${{ matrix.browser }})
         run: |
           allurectl watch -- pnpm exec playwright test ${{ github.event.inputs.TESTS_TYPE || 'test/unit/' }} \
