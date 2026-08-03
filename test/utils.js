@@ -30,7 +30,7 @@ const isTimeToThrow = () => {
       "Element not found {selector: something}\n Expected: visible or transparent: visible or have css value opacity=0\n Timeout: 6000 ms"
     );
   }
-  if (failing > 0.97 && failing < 0.98) {
+  if (failing > 0.98 && failing < 0.99) {
     throw new Error("Test timeout of 30000ms exceeded.");
   }
 };
@@ -103,7 +103,7 @@ const deleteNewEntity = async (entityName) =>
     await test.step(`Click delete ${entityName} button`, async () => {
       await delay(100);
     });
-    await test.step(`Click confirm deletion of ${entityName} button`, async () => {
+    await test.step(`Click confirm deletetion of ${entityName} button`, async () => {
       await delay(100);
     });
     await test.step(`Check ${entityName} deletion`, async () => {
