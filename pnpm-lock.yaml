@@ -12,11 +12,11 @@ importers:
         specifier: ^1.48.2
         version: 1.58.2
       allure-js-commons:
-        specifier: ^3.0.6
-        version: 3.6.0(allure-playwright@3.6.0(@playwright/test@1.58.2))
+        specifier: ^3.10.2
+        version: 3.10.2(allure-playwright@3.10.2(@playwright/test@1.58.2))
       allure-playwright:
-        specifier: ^3.0.6
-        version: 3.6.0(@playwright/test@1.58.2)
+        specifier: ^3.10.2
+        version: 3.10.2(@playwright/test@1.58.2)
 
 packages:
 
@@ -25,16 +25,16 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  allure-js-commons@3.6.0:
-    resolution: {integrity: sha512-RquIzMlh2l+ZLtq+Uxt+ZpOptxLzyPvLfPGbwU7dtgXo0QfUvhLFFkCljIR7Gjxo7jZ+WVqoto1yOPpXqU/i4g==}
+  allure-js-commons@3.10.2:
+    resolution: {integrity: sha512-5nAjUF1iNPSQMwKtEsadclSta8C3L705/k/pIzGb9M6P9krgfRaCyaEHt8pkLlCP9NFj5xk3grjtnAhiLeT+Kg==}
     peerDependencies:
-      allure-playwright: 3.6.0
+      allure-playwright: 3.10.2
     peerDependenciesMeta:
       allure-playwright:
         optional: true
 
-  allure-playwright@3.6.0:
-    resolution: {integrity: sha512-p/m41kdrgkKeJP0dgn/7yEQggxRBQEYdwRKUSfg2VEIfCP1va/6ph7dZNsYWKq+Hyj4Nd5DLs33DTS9VwEHe8w==}
+  allure-playwright@3.10.2:
+    resolution: {integrity: sha512-CGyhxSvx2bIkojhBy0pbQZ12vkLbOE3FBh39WgzPs+katwnuGPUE0whJhryG8aD/dlDALxMehL9G0k8WYBx4tQ==}
     peerDependencies:
       '@playwright/test': '>=1.53.0'
 
@@ -71,16 +71,16 @@ snapshots:
     dependencies:
       playwright: 1.58.2
 
-  allure-js-commons@3.6.0(allure-playwright@3.6.0(@playwright/test@1.58.2)):
+  allure-js-commons@3.10.2(allure-playwright@3.10.2(@playwright/test@1.58.2)):
     dependencies:
       md5: 2.3.0
     optionalDependencies:
-      allure-playwright: 3.6.0(@playwright/test@1.58.2)
+      allure-playwright: 3.10.2(@playwright/test@1.58.2)
 
-  allure-playwright@3.6.0(@playwright/test@1.58.2):
+  allure-playwright@3.10.2(@playwright/test@1.58.2):
     dependencies:
       '@playwright/test': 1.58.2
-      allure-js-commons: 3.6.0(allure-playwright@3.6.0(@playwright/test@1.58.2))
+      allure-js-commons: 3.10.2(allure-playwright@3.10.2(@playwright/test@1.58.2))
 
   charenc@0.0.2: {}
 
