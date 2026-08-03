@@ -97,7 +97,7 @@ jobs:
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
-          allurectl watch -- pnpm exec playwright test/poco \
+          allurectl watch -- pnpm exec playwright test test/poco \
             --shard=${{ matrix.shard }}/${{ needs.setup.outputs.count }} \
             --reporter=allure-playwright
         env:
