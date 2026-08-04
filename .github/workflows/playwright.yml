@@ -97,7 +97,7 @@ jobs:
 
       - name: Run Playwright tests (shard ${{ matrix.shard }}/${{ needs.setup.outputs.count }})
         run: |
-          export ALLURE_LAUNCH_NAME="$(date "+%Y%m%d%H%M%S") set: ${TESTS_TYPE} success: ${TESTS_SUCCESS} playwright tests matrix"
+          export ALLURE_LAUNCH_NAME="$(date "+%Y%m%d%H%M%S") set: ${TESTS_TYPE} success: ${TESTS_SUCCESS} playwright tests matrix on shards"
           allurectl watch -- pnpm exec playwright test ${TESTS_TYPE} \
             --shard=${{ matrix.shard }}/${{ needs.setup.outputs.count }} \
             --reporter=allure-playwright

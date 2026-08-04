@@ -88,7 +88,7 @@ jobs:
 
       - name: Run Playwright tests (${{ matrix.browser }})
         run: |
-          export ALLURE_LAUNCH_NAME="$(date "+%Y%m%d%H%M%S") set: ${TESTS_TYPE} success: ${TESTS_SUCCESS} playwright tests matrix"
+          export ALLURE_LAUNCH_NAME="$(date "+%Y%m%d%H%M%S") set: ${TESTS_TYPE} success: ${TESTS_SUCCESS} playwright tests matrix on browsers"
           allurectl watch -- pnpm exec playwright test ${TESTS_TYPE} --reporter=allure-playwright
           allurectl launch add-issue --current-launch --integration-id 35 --issue-keys "AE-27"
         env:
