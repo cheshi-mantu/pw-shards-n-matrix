@@ -94,6 +94,7 @@ jobs:
           ALLURE_RESULTS: ${{ env.ALLURE_RESULTS }}
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
           ALLURE_LAUNCH_TAGS: "branch:${{ github.ref_name }},event:${{ github.event_name }}"
+          ALLURE_LAUNCH_NAME: "$(date "+%Y%m%d%H%M%S") ${TESTS_TYPE} ${TESTS_SUCCESS} playwright tests matrix"
           RUNNER_SHARD_ID: ${{ matrix.browser }}
           TESTS_SUCCESS: ${{ github.event.inputs.TESTS_SUCCESS }}
           TESTS_TYPE: ${{ github.event.inputs.TESTS_TYPE }}
