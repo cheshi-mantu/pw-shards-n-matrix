@@ -13,6 +13,7 @@ test.afterEach(async () => {
 
 
 test("Playwright homepage contains 'Playwright CLI'", async ({ page }) => {
+
   await allure.tags("web", "playwright", "smoke");
   await allure.epic("Allure Framework");
   await allure.feature("Integration with Playwright");
@@ -20,4 +21,19 @@ test("Playwright homepage contains 'Playwright CLI'", async ({ page }) => {
   await allure.layer("e2e");
   await page.goto("https://playwright.dev");
   await expect(page.getByText("Playwright CLI")).toBeVisible();
+});
+
+test("Playwright homepage contains 'Playwright CLI' with allure steps", async ({ page }) => {
+
+  await allure.tags("web", "playwright", "smoke");
+  await allure.epic("Allure Framework");
+  await allure.feature("Integration with Playwright");
+  await allure.story("Demo page test");
+  await allure.layer("e2e");
+  await allure.step("Open https://playwright.dev", async () => {
+    await page.goto("https://playwright.dev");
+  });
+  await allure.step("Verify Playwright CLI text is visible", async () => {
+    await expect(page.getByText("Playwright CLI")).toBeVisible();
+  });
 });
