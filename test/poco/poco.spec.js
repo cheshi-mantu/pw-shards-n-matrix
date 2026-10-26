@@ -66,7 +66,7 @@ test("Assert a tuple poco 006 001", async () => {
   await allure.feature("load testing test results processing");
   await allure.story("un poco de e2e tests to this project");
   await allure.label("tracker", "AD-6");
-  await assertStep("Assert 123 versus 123", "ODD");
+  await assertStep("Assert 123 versus 123", "Cannot reach the browser");
   await assertStep("Assert 123 versus 123", "ODD");
 });
 
@@ -74,7 +74,7 @@ test("Assert a tuple poco 007 001", async () => {
   await setup({ layer: "e2e", owner: "bugsbunny" });
   await allure.feature("load testing test results processing");
   await allure.story("un poco de e2e tests to this project");
-  await assertStep("Assert 123 versus 123", "ODD");
+  await assertStep("Assert 123 versus 123", "Cannot reach the browser");
   await assertStep("Assert 123 versus 123", "ODD");
 });
 
@@ -128,8 +128,8 @@ test("Assert a tuple poco 013 001", async () => {
   await allure.feature("load testing test results processing");
   await allure.story("un poco de e2e tests to this project");
   await allure.label("tracker", "AD-2");
-  await assertStep("Assert 123 versus 123", "ODD");
-  await assertStep("Assert 123 versus 123", "ODD");
+  await assertStep("Assert 123 versus 123", "Cannot reach the browser");
+  await assertStep("Assert 123 versus 123", "EVEN");
 });
 
 test("Assert a tuple poco 014 001", async () => {
